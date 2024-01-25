@@ -1,0 +1,7 @@
+scale_rootfs:
+  commands:
+    - "root_disk=$(df -h | grep ' /boot' | awk '{print $1}' | sed 's/.$//')"
+    - "growpart ${root_disk} 2"
+    - "pvresize /${root_disk}2"
+    - "lvresize -l +100%FREE ol/root"
+    - "xfs_growfs /"
